@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/todo/view/home_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -8,10 +9,9 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo'),
+        elevation: 0,
       ),
-      body: const Center(
-        child: Text('Todos will be here!!'),
-      ),
+      body: const HomeView(),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 5.5,
