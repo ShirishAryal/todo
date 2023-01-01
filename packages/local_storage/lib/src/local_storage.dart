@@ -18,13 +18,13 @@ class LocalStorage extends TodoApi {
       description: 'Submit todo application next day',
     ),
     Todo(
-      id: '2',
+      id: '3',
       task: 'complete todo application',
       description: 'Submit todo application next day',
       completed: true,
     ),
     Todo(
-      id: '2',
+      id: '4',
       task: 'complete todo application',
       description: 'Submit todo application next day',
     )

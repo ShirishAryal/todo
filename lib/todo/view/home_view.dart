@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/todo/widgets/todo_list_view.dart';
@@ -25,6 +27,10 @@ class TodosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Tasks'),
+        elevation: 0,
+      ),
       body: BlocListener<TodoBloc, TodoState>(
         listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
@@ -55,12 +61,13 @@ class TodosView extends StatelessWidget {
               itemBuilder: (context, index) => TodoListTile(
                     todo: state.todos[index],
                     onToggleCompleted: (isCompleted) {
-                      // context.read<TodoBloc>().add(
-                      //       TodosOverviewTodoCompletionToggled(
-                      //         todo: todo,
-                      //         isCompleted: isCompleted,
-                      //       ),
-                      //     );
+                      log(isCompleted.toString());
+                      context.read<TodoBloc>().add(
+                            TodoCompleted(
+                              todo: state.todos[index],
+                              completed: isCompleted,
+                            ),
+                          );
                     },
                     onDismissed: (_) {
                       // context
@@ -68,6 +75,7 @@ class TodosView extends StatelessWidget {
                       //     .add(TodosOverviewTodoDeleted(todo));
                     },
                     onTap: () {
+                      log('Tap');
                       // Navigator.of(context).push(
                       //   EditTodoPage.route(initialTodo: todo),
                       // );

@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todo'),
+        // title: const Text('Todo'),
         elevation: 0,
       ),
       body: const HomeView(),
@@ -23,7 +23,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepPurple,
         child: const Icon(Icons.add),
         onPressed: () {},
       ),

@@ -18,3 +18,16 @@ class TodoDeleted extends TodoEvent {
   @override
   List<Object> get props => [todo];
 }
+
+class TodoCompleted extends TodoEvent {
+  const TodoCompleted({
+    required this.todo,
+    required this.completed,
+  });
+
+  final Todo todo;
+  final bool completed;
+
+  @override
+  List<Object> get props => [todo, completed];
+}

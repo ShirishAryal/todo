@@ -20,6 +20,7 @@ class TodoListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final captionColor = theme.textTheme.caption?.color;
+    // final captionColor = Colors.red;
 
     return Dismissible(
       key: Key('todoListTile_dismissible_${todo.id}'),
@@ -37,25 +38,39 @@ class TodoListTile extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         title: Text(
-          todo.task!,
+          todo.task,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: !todo.completed!
-              ? null
+          style: !todo.completed
+              ? const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)
               : TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
                   color: captionColor,
                   decoration: TextDecoration.lineThrough,
                 ),
         ),
-        subtitle: Text(todo.description!, maxLines: 1, overflow: TextOverflow.ellipsis),
+        subtitle: Text(
+          todo.description,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: todo.completed ? const TextStyle(decoration: TextDecoration.lineThrough) : null,
+        ),
         iconColor: Theme.of(context).primaryColor,
         leading: Checkbox(
-          side: const BorderSide(width: 1),
+          activeColor: Colors.transparent,
+          side: const BorderSide(width: 1, color: Colors.black),
           shape: const CircleBorder(side: BorderSide.none),
-          value: todo.completed!,
+          checkColor: Colors.black,
+          value: todo.completed,
           onChanged: onToggleCompleted == null ? null : (value) => onToggleCompleted!(value!),
         ),
-        trailing: onTap == null ? null : const Icon(Icons.chevron_right),
+        trailing: onTap == null
+            ? null
+            : const Icon(
+                Icons.chevron_right,
+                color: Colors.grey,
+              ),
       ),
     );
   }

@@ -12,6 +12,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         super(const TodoState()) {
     on<TodoSubscriptionRequested>(_onSubscriptionRequested);
     on<TodoDeleted>(_onTodoDeleted);
+    on<TodoCompleted>(_onTodoCompleted);
   }
   final TodoRepository _todoRepository;
 
@@ -34,6 +35,14 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     Emitter<TodoState> emit,
   ) async {
     emit(state.copyWith());
-    await _todoRepository.deleteTodo(event.todo.id!);
+    await _todoRepository.deleteTodo(event.todo.id);
+  }
+
+  Future<void> _onTodoCompleted(
+    TodoCompleted event,
+    Emitter<TodoState> emit,
+  ) async {
+    final newTodo = event.todo.copyWith(completed: event.completed);
+    await _todoRepository.saveTodo(newTodo);
   }
 }
