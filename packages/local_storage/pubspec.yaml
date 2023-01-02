@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   rxdart: ^0.27.7
+  shared_preferences: ^2.0.15
   todo_api:
     path: ../todo_api
 dev_dependencies:

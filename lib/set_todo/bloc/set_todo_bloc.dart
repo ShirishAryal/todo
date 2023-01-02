@@ -43,7 +43,7 @@ class SetTodoBloc extends Bloc<SetTodoEvent, SetTodoState> {
   ) async {
     emit(state.copyWith(status: SetTodoStatus.loading));
     final todo = (state.initialTodo ?? Todo(task: '', description: '')).copyWith(
-      title: state.task,
+      task: state.task,
       description: state.description,
     );
 

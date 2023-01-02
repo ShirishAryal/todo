@@ -19,7 +19,6 @@ class TodoListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final captionColor = theme.textTheme.caption?.color;
-    // final captionColor = Colors.red;
 
     return Dismissible(
       key: Key('todoListTile_dismissible_${todo.id}'),
@@ -64,12 +63,6 @@ class TodoListTile extends StatelessWidget {
           value: todo.completed,
           onChanged: onToggleCompleted == null ? null : (value) => onToggleCompleted!(value!),
         ),
-        trailing: onTap == null
-            ? null
-            : const Icon(
-                Icons.chevron_right,
-                color: Colors.grey,
-              ),
       ),
     );
   }

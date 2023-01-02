@@ -5,8 +5,8 @@ import 'package:todo_repository/todo_repository.dart';
 import '../bloc/set_todo_bloc.dart';
 
 class SetTodoPage extends StatelessWidget {
-  SetTodoPage(this.initialTodo, {Key? key}) : super(key: key);
-  Todo? initialTodo;
+  const SetTodoPage(this.initialTodo, {Key? key}) : super(key: key);
+  final Todo? initialTodo;
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +38,24 @@ class EditTodoView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
+        // leading: Icon(Icons.arrow_back,color: Colors.,),
         title: Text(isNewTodo ? 'Add Todo' : 'Edit Todo'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        height: 50,
-        width: MediaQuery.of(context).size.width / 2,
-        child: FloatingActionButton(
-          shape: const ContinuousRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(32)),
+      floatingActionButton: Visibility(
+        visible: MediaQuery.of(context).viewInsets.bottom == 0,
+        child: SizedBox(
+          height: 50,
+          width: MediaQuery.of(context).size.width / 2,
+          child: FloatingActionButton(
+            shape: const ContinuousRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(32)),
+            ),
+            backgroundColor: status.isLoadingOrSuccess ? fabBackgroundColor.withOpacity(0.5) : fabBackgroundColor,
+            onPressed: status.isLoadingOrSuccess ? null : () => context.read<SetTodoBloc>().add(const SetTodoSubmitted()),
+            child: status.isLoadingOrSuccess ? const CircularProgressIndicator() : const Icon(Icons.check_rounded),
           ),
-          backgroundColor: status.isLoadingOrSuccess ? fabBackgroundColor.withOpacity(0.5) : fabBackgroundColor,
-          onPressed: status.isLoadingOrSuccess ? null : () => context.read<SetTodoBloc>().add(const SetTodoSubmitted()),
-          child: status.isLoadingOrSuccess ? const CircularProgressIndicator() : const Icon(Icons.check_rounded),
         ),
       ),
       body: SingleChildScrollView(
@@ -75,13 +79,14 @@ class _TitleField extends StatelessWidget {
     final hintText = state.initialTodo?.task ?? '';
 
     return TextFormField(
-      key: const Key('editTodoView_title_textFormField'),
+      key: const Key('setTodoView_title_textFormField'),
       initialValue: state.task,
       decoration: InputDecoration(
         enabled: !state.status.isLoadingOrSuccess,
         labelText: 'Task',
         hintText: hintText,
       ),
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
       maxLength: 50,
       onChanged: (value) {
         context.read<SetTodoBloc>().add(SetTodoTaskChanged(value));
@@ -99,12 +104,13 @@ class _DescriptionField extends StatelessWidget {
     final hintText = state.initialTodo?.description ?? '';
 
     return TextFormField(
-      key: const Key('editTodoView_description_textFormField'),
+      key: const Key('setTodoView_description_textFormField'),
       initialValue: state.description,
       decoration: InputDecoration(
         enabled: !state.status.isLoadingOrSuccess,
         hintText: hintText,
       ),
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
       maxLength: 100,
       maxLines: 7,
       onChanged: (value) {
