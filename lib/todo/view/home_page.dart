@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => Navigator.of(context).pushNamed('/settodo', arguments: null),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

@@ -50,8 +50,8 @@ class TodoListTile extends StatelessWidget {
                 ),
         ),
         subtitle: Text(
-          todo.id.toString(),
-          maxLines: 1,
+          todo.description.toString(),
+          maxLines: 5,
           overflow: TextOverflow.ellipsis,
           style: todo.completed ? const TextStyle(decoration: TextDecoration.lineThrough) : null,
         ),

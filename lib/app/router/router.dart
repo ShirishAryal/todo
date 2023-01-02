@@ -10,7 +10,7 @@ class AppRouter {
       case '/':
         return MaterialPageRoute(builder: (_) => const HomePage());
       case '/settodo':
-        Todo? _data = settings.arguments as Todo;
+        Todo? _data = settings.arguments as Todo?;
         return MaterialPageRoute(builder: (_) => SetTodoPage(_data));
       default:
         return MaterialPageRoute(

@@ -38,15 +38,21 @@ class EditTodoView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('add todo'),
+        automaticallyImplyLeading: false,
+        title: Text(isNewTodo ? 'Add Todo' : 'Edit Todo'),
       ),
-      floatingActionButton: FloatingActionButton(
-        shape: const ContinuousRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32)),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SizedBox(
+        height: 50,
+        width: MediaQuery.of(context).size.width / 2,
+        child: FloatingActionButton(
+          shape: const ContinuousRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(32)),
+          ),
+          backgroundColor: status.isLoadingOrSuccess ? fabBackgroundColor.withOpacity(0.5) : fabBackgroundColor,
+          onPressed: status.isLoadingOrSuccess ? null : () => context.read<SetTodoBloc>().add(const SetTodoSubmitted()),
+          child: status.isLoadingOrSuccess ? const CircularProgressIndicator() : const Icon(Icons.check_rounded),
         ),
-        backgroundColor: status.isLoadingOrSuccess ? fabBackgroundColor.withOpacity(0.5) : fabBackgroundColor,
-        onPressed: status.isLoadingOrSuccess ? null : () => context.read<SetTodoBloc>().add(const SetTodoSubmitted()),
-        child: status.isLoadingOrSuccess ? const CircularProgressIndicator() : const Icon(Icons.check_rounded),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -97,10 +103,9 @@ class _DescriptionField extends StatelessWidget {
       initialValue: state.description,
       decoration: InputDecoration(
         enabled: !state.status.isLoadingOrSuccess,
-        // labelText: l10n.editTodoDescriptionLabel,
         hintText: hintText,
       ),
-      maxLength: 300,
+      maxLength: 100,
       maxLines: 7,
       onChanged: (value) {
         context.read<SetTodoBloc>().add(SetTodoDescriptionChanged(value));

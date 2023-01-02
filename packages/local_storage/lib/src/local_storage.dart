@@ -39,12 +39,15 @@ class LocalStorage extends TodoApi {
 
   @override
   Future<void> deleteTodo(String id) async {
-    final index = _todoList.indexWhere((element) => element.id == id);
+    final todos = [..._todoStreamController.value];
+    final index = todos.indexWhere((element) => element.id == id);
     if (index == -1) {
       throw TodoNotFoundException();
     } else {
-      _todoList.removeAt(index);
+      todos.removeAt(index);
     }
+    _todoStreamController.add(todos);
+    _todoList.removeWhere((element) => element.id == id);
   }
 
   @override
