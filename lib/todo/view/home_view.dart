@@ -57,28 +57,30 @@ class TodosView extends StatelessWidget {
             }
           }
           return ListView.builder(
-              itemCount: state.todos.length,
-              itemBuilder: (context, index) => TodoListTile(
-                    todo: state.todos[index],
-                    onToggleCompleted: (isCompleted) {
-                      log(isCompleted.toString());
-                      context.read<TodoBloc>().add(
-                            TodoCompleted(
-                              todo: state.todos[index],
-                              completed: isCompleted,
-                            ),
-                          );
-                    },
-                    onDismissed: (_) {
-                      context.read<TodoBloc>().add(TodoDeleted(state.todos[index]));
-                    },
-                    onTap: () {
-                      log('Tap');
-                      // Navigator.of(context).push(
-                      //   EditTodoPage.route(initialTodo: todo),
-                      // );
-                    },
-                  ));
+            itemCount: state.todos.length,
+            itemBuilder: (context, index) => TodoListTile(
+              todo: state.todos[index],
+              onToggleCompleted: (isCompleted) {
+                log(isCompleted.toString());
+                context.read<TodoBloc>().add(
+                      TodoCompleted(
+                        todo: state.todos[index],
+                        completed: isCompleted,
+                      ),
+                    );
+              },
+              onDismissed: (_) {
+                context.read<TodoBloc>().add(TodoDeleted(state.todos[index]));
+              },
+              onTap: () {
+                log('Tap');
+                Navigator.of(context).pushNamed('/settodo', arguments: state.todos[index]);
+                // Navigator.of(context).push(
+                //   EditTodoPage.route(initialTodo: todo),
+                // );
+              },
+            ),
+          );
         }),
       ),
     );

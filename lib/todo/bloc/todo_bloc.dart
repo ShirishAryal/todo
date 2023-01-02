@@ -35,7 +35,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     Emitter<TodoState> emit,
   ) async {
     emit(state.copyWith());
-    await _todoRepository.deleteTodo(event.todo.id);
+    await _todoRepository.deleteTodo(event.todo.id!);
   }
 
   Future<void> _onTodoCompleted(

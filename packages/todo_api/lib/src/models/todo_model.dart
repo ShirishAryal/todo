@@ -1,50 +1,7 @@
-// import 'package:equatable/equatable.dart';
-
-// class Todo extends Equatable {
-//   String? id;
-//   String? task;
-//   String? description;
-//   bool? completed;
-
-//   Todo({this.id, this.task, this.description, this.completed = false});
-
-//   Todo.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
-//     task = json['task'];
-//     description = json['description'];
-//     completed = json['completed'];
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     data['id'] = id;
-//     data['task'] = task;
-//     data['description'] = description;
-//     data['completed'] = completed;
-//     return data;
-//   }
-
-//   Todo copyWith({
-//     String? id,
-//     String? task,
-//     String? description,
-//     bool? completed,
-//   }) {
-//     return Todo(
-//       id: id ?? this.id,
-//       task: task ?? this.task,
-//       description: description ?? this.description,
-//       completed: completed ?? this.completed,
-//     );
-//   }
-
-//   @override
-//   List<Object> get props => [id!, task!, description!, completed!];
-// }
-
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:uuid/uuid.dart';
 
 Todo todoFromMap(String str) => Todo.fromMap(json.decode(str));
 
@@ -52,13 +9,17 @@ String todoToMap(Todo data) => json.encode(data.toMap());
 
 class Todo extends Equatable {
   Todo({
-    required this.id,
+    String? id,
     required this.task,
     required this.description,
     this.completed = false,
-  });
+  })  : assert(
+          id == null || id.isNotEmpty,
+          'id can not be null and should be empty',
+        ),
+        id = id ?? const Uuid().v4();
 
-  String id;
+  String? id;
   String task;
   String description;
   bool completed;
@@ -87,10 +48,11 @@ class Todo extends Equatable {
       id: id ?? this.id,
       task: title ?? task,
       description: description ?? this.description,
-      completed: completed ?? completed!,
+      // completed: completed ?? completed!,
+      completed: completed ?? false,
     );
   }
 
   @override
-  List<Object> get props => [id, task, description, completed];
+  List<Object?> get props => [id, task, description, completed];
 }

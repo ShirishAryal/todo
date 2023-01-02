@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:todo_repository/todo_repository.dart';
 
 class TodoListTile extends StatelessWidget {
@@ -51,7 +50,7 @@ class TodoListTile extends StatelessWidget {
                 ),
         ),
         subtitle: Text(
-          todo.description,
+          todo.id.toString(),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: todo.completed ? const TextStyle(decoration: TextDecoration.lineThrough) : null,
