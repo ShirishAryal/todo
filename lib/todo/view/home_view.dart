@@ -70,9 +70,7 @@ class TodosView extends StatelessWidget {
                           );
                     },
                     onDismissed: (_) {
-                      // context
-                      //     .read<TodosOverviewBloc>()
-                      //     .add(TodosOverviewTodoDeleted(todo));
+                      context.read<TodoBloc>().add(TodoDeleted(state.todos[index]));
                     },
                     onTap: () {
                       log('Tap');

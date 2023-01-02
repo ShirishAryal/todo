@@ -53,11 +53,13 @@ class LocalStorage extends TodoApi {
 
   @override
   Future<void> saveTodo(Todo todo) async {
-    final index = _todoList.indexWhere((element) => element.id == todo.id);
+    final todos = [..._todoStreamController.value];
+    final index = todos.indexWhere((element) => element.id == todo.id);
     if (index >= 0) {
-      _todoList[index] = todo;
+      todos[index] = todo;
     } else {
-      _todoList.add(todo);
+      todos.add(todo);
     }
+    _todoStreamController.add(todos);
   }
 }
